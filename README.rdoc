@@ -1,28 +1,37 @@
-== README
+### Use Webpacker assets in the application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. Enable Webpacker with `SplitChunks`:
 
-Things you may want to cover:
+  a. Enable `SplitChunks` with default config by adding to `config/webpack/environment.js`:
 
-* Ruby version
+  ```js
+  environment.splitChunks()
+  ```
 
-* System dependencies
+  b. Enable Webpacker by updating `app/views/layout/application.html.erb`:
 
-* Configuration
+  Change:
 
-* Database creation
+  ```erb
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_pack_tag 'application' %>
+  ```
 
-* Database initialization
+  on vue example:
 
-* How to run the test suite
+  ```erb
+  <%= stylesheet_packs_with_chunks_tag 'hello_vue', media: 'all' %>
+  <%= javascript_packs_with_chunks_tag 'hello_vue' %>
+  ```
 
-* Services (job queues, cache servers, search engines, etc.)
+2. Add sample page to host Vue.js component:
 
-* Deployment instructions
+```bash
+bin/rails generate controller Landing index --no-javascripts --no-stylesheets --no-helper --no-assets --no-fixture
+```
 
-* ...
+3. Setup a sample page as a home page by updating `config/routes.rb`:
 
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+```ruby
+  root 'landing#index'
+```
